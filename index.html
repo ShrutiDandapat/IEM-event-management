@@ -1,0 +1,2127 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IGNITE '26 — IEM × UEM Campus Event Portal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Playfair Display (Editorial Serif) & Plus Jakarta Sans (UI & Metadata) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream: '#F7F3EA',
+            surface: '#FFFDF9',
+            parchment: '#F0E9DC',
+            espresso: '#1E1916',
+            inkMuted: '#5C524B',
+            terracotta: '#C84B31',
+            terracottaDark: '#A93A23',
+            marigold: '#D9A05B',
+            marigoldLight: '#E9BE84',
+            sage: '#3B6E52',
+            borderWarm: '#E3DACB',
+          },
+          fontFamily: {
+            serif: ['Playfair Display', 'Georgia', 'serif'],
+            sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+          },
+          boxShadow: {
+            'editorial': '0 14px 36px -12px rgba(30, 25, 22, 0.08)',
+            'editorial-hover': '0 22px 46px -12px rgba(30, 25, 22, 0.14)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #F7F3EA;
+      color: #1E1916;
+      overflow-x: hidden;
+    }
+
+    /* Subtle Editorial Paper Grain Texture */
+    .paper-texture {
+      background-image: radial-gradient(rgba(30, 25, 22, 0.045) 1px, transparent 0);
+      background-size: 24px 24px;
+    }
+
+    /* First-Page Hero Campus Background & Editorial Veil */
+    .hero-campus-bg {
+      position: relative;
+      overflow: visible;
+      background:
+        radial-gradient(circle at 78% 24%, rgba(217, 160, 91, 0.22), transparent 55%),
+        linear-gradient(180deg, #E8EEF5 0%, #F7F3EA 100%);
+    }
+
+    .hero-campus-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 32%;
+      opacity: 0.72;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+
+    .hero-campus-veil {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(100deg, rgba(247, 243, 234, 0.90) 0%, rgba(247, 243, 234, 0.74) 45%, rgba(247, 243, 234, 0.34) 76%, rgba(30, 25, 22, 0.24) 100%),
+        linear-gradient(180deg, rgba(247, 243, 234, 0.14) 0%, rgba(247, 243, 234, 0.48) 72%, rgba(247, 243, 234, 0.96) 100%),
+        radial-gradient(rgba(30, 25, 22, 0.04) 1px, transparent 0);
+      background-size: 100% 100%, 100% 100%, 24px 24px;
+      pointer-events: none;
+    }
+
+    /* Merged Second-Page Campus Fade Backdrop */
+    .lineup-campus-merge {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .lineup-campus-fade-photo {
+      position: absolute;
+      top: -120px;
+      left: 0;
+      right: 0;
+      width: 100%;
+      height: 540px;
+      object-fit: cover;
+      object-position: center 42%;
+      opacity: 0.42;
+      pointer-events: none;
+      -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.48) 48%, rgba(0, 0, 0, 0) 100%);
+      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.48) 48%, rgba(0, 0, 0, 0) 100%);
+    }
+
+    .lineup-campus-fade-veil {
+      position: absolute;
+      top: -120px;
+      left: 0;
+      right: 0;
+      height: 540px;
+      background: linear-gradient(180deg, rgba(247, 243, 234, 0.68) 0%, rgba(247, 243, 234, 0.84) 55%, rgba(247, 243, 234, 1) 100%);
+      pointer-events: none;
+    }
+
+    /* Card Image Smooth Zoom */
+    .event-card .card-img {
+      transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .event-card:hover .card-img {
+      transform: scale(1.05);
+    }
+
+    /* Hide Scrollbar for Horizontal Pill Strips */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #F7F3EA;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #D4C8B8;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #C84B31;
+    }
+  </style>
+</head>
+<body class="font-sans antialiased selection:bg-terracotta selection:text-white">
+
+  <!-- Reusable IEM Crest SVG Definition -->
+  <svg width="0" height="0" class="sr-only" aria-hidden="true">
+    <defs>
+      <g id="iem-crest-mark">
+        <rect x="0" y="0" width="260" height="150" rx="14" fill="#FFFFFF" />
+        <!-- Left Red Laurel Wreath -->
+        <path d="M74 122 C44 108, 32 76, 44 42 C50 27, 62 17, 74 12" fill="none" stroke="#E11D2A" stroke-width="4" stroke-linecap="round"/>
+        <path d="M62 110 L47 104 M54 95 L38 92 M49 78 L34 77 M49 60 L35 56 M55 42 L43 35 M65 26 L56 17" stroke="#E11D2A" stroke-width="3.2" stroke-linecap="round"/>
+        <!-- Right Red Laurel Wreath -->
+        <path d="M186 122 C216 108, 228 76, 216 42 C210 27, 198 17, 186 12" fill="none" stroke="#E11D2A" stroke-width="4" stroke-linecap="round"/>
+        <path d="M198 110 L213 104 M206 95 L222 92 M211 78 L226 77 M211 60 L225 56 M205 42 L217 35 M195 26 L204 17" stroke="#E11D2A" stroke-width="3.2" stroke-linecap="round"/>
+        <!-- Bottom Ribbon Tie -->
+        <path d="M112 122 L130 112 L148 122 M122 117 L110 128 M138 117 L150 128" fill="none" stroke="#E11D2A" stroke-width="3" stroke-linecap="round"/>
+        <!-- Bold IEM Wordmark -->
+        <text x="130" y="74" text-anchor="middle" font-family="Playfair Display, Georgia, serif" font-weight="800" font-size="46" letter-spacing="2" fill="#141824">IEM</text>
+        <!-- Sanskrit Motto -->
+        <text x="130" y="94" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-weight="700" font-size="10.5" fill="#141824">श्रद्धावान लभते ज्ञानम्</text>
+        <!-- Institution Name & Tagline -->
+        <text x="130" y="114" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-weight="800" font-size="8.2" letter-spacing="0.4" fill="#141824">INSTITUTE OF ENGINEERING &amp; MANAGEMENT</text>
+        <text x="130" y="127" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-weight="600" font-size="8.2" fill="#2A2E37">Good Education, Good Jobs</text>
+      </g>
+    </defs>
+  </svg>
+
+  <!-- =====================================================================
+       1. FLOATING EDITORIAL NAVIGATION HEADER
+       ===================================================================== -->
+  <header class="sticky top-0 z-40 bg-cream/90 backdrop-blur-md border-b border-borderWarm px-4 sm:px-8 py-3.5">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-3">
+      
+      <!-- Brand Identity: IEM × UEM IGNITE '26 -->
+      <a href="#top" class="flex items-center gap-3 group">
+        <div class="bg-white border border-borderWarm rounded-full px-3 py-1 flex items-center gap-2.5 shadow-sm group-hover:border-terracotta/40 transition">
+          <svg viewBox="0 0 260 150" class="h-9 w-auto shrink-0" role="img" aria-label="Institute of Engineering & Management Logo">
+            <use href="#iem-crest-mark" />
+          </svg>
+          <span class="text-xs text-terracotta font-serif italic">&times;</span>
+          <span class="w-7 h-7 rounded-full bg-terracotta text-white font-serif font-bold text-xs flex items-center justify-center shrink-0">U</span>
+          <span class="text-xs font-extrabold tracking-tight text-espresso pr-1">UEM</span>
+        </div>
+        <div class="hidden sm:block">
+          <span class="font-serif font-bold text-lg tracking-tight text-espresso">IGNITE ’26</span>
+          <span class="block text-[10px] font-semibold uppercase tracking-[0.18em] text-inkMuted -mt-1">Campus Event Ecosystem</span>
+        </div>
+      </a>
+
+      <!-- Center Navigation Links -->
+      <nav class="hidden md:flex items-center gap-7 text-xs font-bold uppercase tracking-wider text-inkMuted">
+        <a href="#lineup" class="hover:text-terracotta transition">Semester Lineup</a>
+        <a href="#aiml-track" class="hover:text-terracotta transition">AI &amp; ML Track</a>
+        <a href="#my-registered-events" class="hover:text-terracotta transition">My Registered Events</a>
+        <a href="#order-of-events" class="hover:text-terracotta transition">Order of Events</a>
+        <a href="#organiser" class="hover:text-terracotta transition">Organised By IEM</a>
+      </nav>
+
+      <!-- Right Actions: My Passes Wallet, Organizer Console & Direct Lineup Registration -->
+      <div class="flex items-center gap-2 sm:gap-2.5">
+        <a href="#my-registered-events" class="bg-surface hover:bg-parchment text-espresso border border-borderWarm text-xs font-bold px-3.5 py-2 rounded-full shadow-sm transition flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5 text-terracotta" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"></path></svg>
+          <span class="hidden sm:inline">My Passes</span>
+          <span id="pass-count-badge" class="bg-espresso text-cream text-[10px] font-extrabold px-1.5 py-0.2 rounded-full">0</span>
+        </a>
+
+        <button onclick="openAdminModal()" class="bg-surface hover:bg-parchment text-espresso border border-borderWarm text-xs font-bold px-3.5 py-2 rounded-full shadow-sm transition flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5 text-marigold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+          <span class="hidden md:inline">Organizer Hub</span>
+        </button>
+
+        <button onclick="scrollToLineupRegistration()" class="bg-terracotta hover:bg-terracottaDark text-white text-xs font-bold uppercase tracking-wider px-4 sm:px-5 py-2.5 rounded-full shadow-sm transition flex items-center gap-1.5">
+          <span>Get Pass</span>
+          <span>&rarr;</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- =====================================================================
+       2. SPLIT-SHOWCASE EDITORIAL HERO WITH LIVE COUNTDOWN SPOTLIGHT
+       ===================================================================== -->
+  <section id="top" class="hero-campus-bg pt-10 pb-16 sm:pt-14 sm:pb-24 px-4 sm:px-8">
+    <img
+      src="c:\Users\abhir\Downloads\Screenshot 2026-11-16 234236.jpg"
+      onerror="this.onerror=null; this.src='https://placehold.co/1600x900/DCE7F3/1E1916?text=Institute+of+Engineering+%26+Management+Campus';"
+      alt="Institute of Engineering and Management Glass Facade Campus"
+      class="hero-campus-photo"
+    />
+    <div class="hero-campus-veil" aria-hidden="true"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+      
+      <!-- Left 7 Columns: Warm Editorial Typography + Campus Metrics -->
+      <div class="lg:col-span-7 space-y-6">
+        <div class="inline-flex items-center gap-2 bg-surface border border-borderWarm rounded-full px-3.5 py-1.5 shadow-xs">
+          
+          <span class="text-[11px] font-extrabold uppercase tracking-widest text-espresso">IEM &times; UEM Campus Festival</span>
+        </div>
+
+        <h1 class="font-serif font-bold text-4xl sm:text-6xl lg:text-[64px] leading-[1.06] tracking-tight text-espresso">
+          Where Campus Curiosity Becomes <span class="italic font-semibold text-terracotta">Real-World</span> Craft.
+        </h1>
+
+        <p class="text-base sm:text-lg text-inkMuted max-w-2xl leading-relaxed">
+          One unified portal for hackathons, robotics battles, research symposiums, and cultural nights across <strong class="text-espresso font-semibold">IEM Gurukul</strong>, <strong class="text-espresso font-semibold">IEM Management House</strong>, and <strong class="text-espresso font-semibold">UEM New Town</strong>.
+        </p>
+
+        <!-- Primary Action Buttons -->
+        <div class="flex flex-wrap items-center gap-3.5 pt-1">
+          <a href="#lineup" class="bg-espresso hover:bg-terracotta text-cream text-xs sm:text-sm font-bold uppercase tracking-wider px-6 py-3.5 rounded-full shadow-editorial transition">
+            Explore &amp; Register
+          </a>
+          <a href="#my-registered-events" class="bg-surface hover:bg-parchment text-espresso border border-borderWarm text-xs sm:text-sm font-bold uppercase tracking-wider px-6 py-3.5 rounded-full transition">
+            My Registered Events &darr;
+          </a>
+        </div>
+
+        <!-- Editorial Campus Stat Strip -->
+        <div class="grid grid-cols-3 gap-4 pt-6 border-t border-borderWarm max-w-xl">
+          <div>
+            <p class="font-serif font-bold text-2xl sm:text-3xl text-espresso">12+</p>
+            <p class="text-xs font-medium text-inkMuted mt-0.5">Curated Flagships</p>
+          </div>
+          <div>
+            <p class="font-serif font-bold text-2xl sm:text-3xl text-terracotta">3 Campuses</p>
+            <p class="text-xs font-medium text-inkMuted mt-0.5">Salt Lake &amp; New Town</p>
+          </div>
+          <div>
+            <p class="font-serif font-bold text-2xl sm:text-3xl text-espresso">Instant QR</p>
+            <p class="text-xs font-medium text-inkMuted mt-0.5">Digital Gate Entry</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right 5 Columns: Interactive Featured Spotlight Card with Live Countdown & Seat Progress -->
+      <div class="lg:col-span-5">
+        <div class="bg-surface rounded-[24px] border border-borderWarm shadow-editorial overflow-hidden">
+          <!-- Spotlight Top Bar with Prev/Next Switcher -->
+          <div class="bg-parchment/75 px-5 py-3 border-b border-borderWarm flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-terracotta animate-ping"></span>
+              <span class="text-[11px] font-extrabold uppercase tracking-wider text-espresso">Featured Spotlight</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <span id="spotlight-counter" class="text-[11px] font-bold text-inkMuted mr-1">1 / 4</span>
+              <button onclick="cycleSpotlight(-1)" class="w-7 h-7 rounded-full bg-surface hover:bg-espresso hover:text-cream border border-borderWarm flex items-center justify-center transition" aria-label="Previous Featured">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M15 19l-7-7 7-7"></path></svg>
+              </button>
+              <button onclick="cycleSpotlight(1)" class="w-7 h-7 rounded-full bg-surface hover:bg-espresso hover:text-cream border border-borderWarm flex items-center justify-center transition" aria-label="Next Featured">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 5l7 7-7 7"></path></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Dynamic Spotlight Body -->
+          <div id="spotlight-card-body">
+            <!-- Populated via JS -->
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       3. SEMESTER LINEUP + INTEGRATED DIRECT REGISTRATION SECTION
+       ===================================================================== -->
+  <section id="lineup" class="lineup-campus-merge py-16 sm:py-24 px-4 sm:px-8 border-b border-borderWarm">
+    <img
+      src="Screenshot 2026-11-16 234236.jpg"
+      onerror="this.onerror=null; this.src='https://placehold.co/1600x900/DCE7F3/1E1916?text=Institute+of+Engineering+%26+Management+Campus';"
+      alt=""
+      aria-hidden="true"
+      class="lineup-campus-fade-photo"
+    />
+    <div class="lineup-campus-fade-veil" aria-hidden="true"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto">
+      
+      <!-- Section Header + Live Search -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
+        <div>
+          <span class="text-xs font-extrabold uppercase tracking-[0.2em] text-terracotta">Semester 2026–27 Lineup</span>
+          <h2 class="font-serif font-bold text-3xl sm:text-5xl text-espresso mt-1">
+            Browse &amp; Register Directly
+          </h2>
+        </div>
+
+        <!-- Search Input -->
+        <div class="w-full md:w-80 relative">
+          <input
+            id="event-search-input"
+            type="text"
+            placeholder="Search by title, lab, or skill..."
+            oninput="handleSearch(this.value)"
+            class="w-full bg-surface border border-borderWarm focus:border-terracotta focus:ring-2 focus:ring-terracotta/15 rounded-full pl-10 pr-4 py-2.5 text-sm text-espresso placeholder-inkMuted/60 shadow-sm outline-none transition"
+          />
+          <svg class="w-4 h-4 text-inkMuted absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        </div>
+      </div>
+
+      <!-- Multi-Campus Selector + Category Filter Pills -->
+      <div class="bg-surface rounded-[24px] border border-borderWarm p-4 sm:p-5 mb-10 shadow-sm space-y-4">
+        <!-- Campus Tabs -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-3.5 border-b border-borderWarm">
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="text-[11px] font-extrabold uppercase tracking-wider text-inkMuted mr-1">Campus:</span>
+            <div id="campus-filter-bar" class="flex items-center gap-1.5 flex-wrap">
+              <!-- Populated via JS -->
+            </div>
+          </div>
+          <span class="text-xs font-semibold text-inkMuted">
+            Showing <strong id="visible-event-count" class="text-espresso">12</strong> events
+          </span>
+        </div>
+
+        <!-- Category Pills -->
+        <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1" id="category-filter-bar">
+          <!-- Populated via JS -->
+        </div>
+      </div>
+
+      <!-- INTEGRATED REGISTRATION STUDIO INSIDE SEMESTER LINEUP -->
+      <div id="lineup-register-panel" class="bg-surface rounded-[24px] border border-borderWarm shadow-editorial p-6 sm:p-8 mb-12 relative overflow-hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          
+          <!-- Left 4 Columns: Live Selected Event Summary -->
+          <div class="lg:col-span-4 bg-parchment/75 rounded-2xl p-5 border border-borderWarm">
+            <span class="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider text-terracotta bg-surface px-2.5 py-1 rounded-full border border-borderWarm mb-3">
+              
+              Instant Lineup Pass
+            </span>
+            <h3 class="font-serif font-bold text-2xl text-espresso">Register in One Step</h3>
+            <p class="text-xs text-inkMuted leading-relaxed mt-1.5">
+              Select any event from the lineup cards below or pick directly from the dropdown to generate your verified QR gate pass immediately.
+            </p>
+
+            <div id="inline-selected-preview" class="mt-5 pt-4 border-t border-borderWarm space-y-1.5">
+              <!-- Dynamically displays selected event venue, date & seats -->
+            </div>
+          </div>
+
+          <!-- Right 8 Columns: Inline Registration Form & Instant QR Ticket Output -->
+          <div class="lg:col-span-8">
+            <form id="inline-registration-form" onsubmit="submitInlineRegistration(event)" class="space-y-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-[11px] font-extrabold uppercase tracking-wider text-inkMuted mb-1">Choose Lineup Event</label>
+                  <select id="inline-reg-event" onchange="syncInlinePreview()" required class="w-full bg-cream/60 border border-borderWarm rounded-xl px-3.5 py-2.5 text-sm font-bold text-espresso focus:border-terracotta outline-none">
+                    <!-- Populated via JS -->
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-[11px] font-extrabold uppercase tracking-wider text-inkMuted mb-1">Participation Mode</label>
+                  <div class="grid grid-cols-2 gap-2">
+                    <button type="button" id="inline-type-solo" onclick="setInlineRegType('Individual')" class="py-2.5 px-3 rounded-xl text-xs font-bold border border-espresso bg-espresso text-cream transition">
+                      Individual Pass
+                    </button>
+                    <button type="button" id="inline-type-team" onclick="setInlineRegType('Team (2–4)')" class="py-2.5 px-3 rounded-xl text-xs font-bold border border-borderWarm bg-cream/60 text-espresso hover:bg-parchment transition">
+                      Team (2–4)
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div id="inline-team-box" class="hidden">
+                <label class="block text-[11px] font-extrabold uppercase tracking-wider text-inkMuted mb-1">Squad / Team Name</label>
+                <input id="inline-reg-team" type="text" placeholder="e.g., Neural Nomads" class="w-full bg-cream/60 border border-borderWarm rounded-xl px-3.5 py-2.5 text-sm focus:border-terracotta outline-none" />
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+                <div>
+                  <label class="block text-[11px] font-extrabold uppercase tracking-wider text-inkMuted mb-1">Student Full Name</label>
+                  <input id="inline-reg-name" type="text" required placeholder="e.g., Ananya Roy" class="w-full bg-cream/60 border border-borderWarm rounded-xl px-3.5 py-2.5 text-sm focus:border-terracotta outline-none" />
+                </div>
+                <div>
+                  <label class="block text-[11px] font-extrabold uppercase tracking-wider text-inkMuted mb-1">Enrollment / Roll No.</label>
+                  <input id="inline-reg-roll" type="text" required placeholder="e.g., 12023009042" class="w-full bg-cream/60 border border-borderWarm rounded-xl px-3.5 py-2.5 text-sm focus:border-terracotta outline-none" />
+                </div>
+                <div>
+                  <label class="block text-[11px] font-extrabold uppercase tracking-wider text-inkMuted mb-1">College Email</label>
+                  <input id="inline-reg-email" type="email" required placeholder="name@iem.edu.in" class="w-full bg-cream/60 border border-borderWarm rounded-xl px-3.5 py-2.5 text-sm focus:border-terracotta outline-none" />
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5 items-end">
+                <div>
+                  <label class="block text-[11px] font-extrabold uppercase tracking-wider text-inkMuted mb-1">Home Campus</label>
+                  <select id="inline-reg-campus" class="w-full bg-cream/60 border border-borderWarm rounded-xl px-3.5 py-2.5 text-sm focus:border-terracotta outline-none">
+                    <option value="IEM Gurukul">IEM Gurukul</option>
+                    <option value="IEM Management House">IEM Management House</option>
+                    <option value="UEM New Town">UEM New Town</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-[11px] font-extrabold uppercase tracking-wider text-inkMuted mb-1">Department</label>
+                  <select id="inline-reg-dept" class="w-full bg-cream/60 border border-borderWarm rounded-xl px-3.5 py-2.5 text-sm focus:border-terracotta outline-none">
+                    <option value="CSE">CSE</option>
+                    <option value="CSE (AI & ML)">CSE (AI &amp; ML)</option>
+                    <option value="IT">IT</option>
+                    <option value="ECE">ECE</option>
+                    <option value="EE / ME">EE / ME</option>
+                    <option value="BBA / MBA">BBA / MBA</option>
+                  </select>
+                </div>
+                <div>
+                  <button type="submit" class="w-full bg-terracotta hover:bg-terracottaDark text-white text-xs font-extrabold uppercase tracking-wider py-3 px-5 rounded-xl shadow-md transition flex items-center justify-center gap-2">
+                    <span>Confirm &amp; Generate QR</span>
+                    <span>&rarr;</span>
+                  </button>
+                </div>
+              </div>
+            </form>
+
+            <!-- Inline Ticket Confirmation Card -->
+            <div id="inline-ticket-result" class="hidden bg-cream/80 rounded-2xl border-2 border-dashed border-espresso/25 p-5">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div class="space-y-1">
+                  <div class="flex items-center gap-2">
+                    <span class="bg-sage text-white text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full">Pass Issued</span>
+                    <span id="inline-ticket-id" class="font-mono text-xs font-extrabold text-terracotta">#SYN-26-0000</span>
+                  </div>
+                  <h4 id="inline-ticket-event" class="font-serif font-bold text-2xl text-espresso">Event Title</h4>
+                  <p id="inline-ticket-meta" class="text-xs text-inkMuted">Date &bull; Venue</p>
+                  <p id="inline-ticket-holder" class="text-xs font-bold text-espresso pt-1">Student Name &bull; Roll ID</p>
+                </div>
+
+                <div class="flex items-center gap-3 self-start sm:self-center">
+                  <div id="inline-ticket-qr" class="w-20 h-20 bg-white p-1.5 rounded-xl border border-borderWarm shrink-0"></div>
+                  <div class="flex flex-col gap-2">
+                    <a href="#my-registered-events" class="text-center bg-espresso text-cream text-[11px] font-bold px-3.5 py-2 rounded-lg hover:bg-terracotta transition">
+                      View My Events
+                    </a>
+                    <button onclick="resetInlineForm()" class="bg-surface border border-borderWarm text-espresso text-[11px] font-bold px-3.5 py-2 rounded-lg hover:bg-parchment transition">
+                      + Book Another
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 3-Column Event Cards Grid -->
+      <div id="events-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+        <!-- Populated via JS -->
+      </div>
+
+      <!-- Empty Filter State -->
+      <div id="events-empty-state" class="hidden text-center py-16 bg-surface rounded-[24px] border border-borderWarm mt-6">
+        <p class="font-serif font-bold text-2xl text-espresso mb-2">No events match your current filter</p>
+        <p class="text-sm text-inkMuted mb-5">Try switching campuses or clearing your search query.</p>
+        <button onclick="resetAllFilters()" class="bg-terracotta text-white text-xs font-bold uppercase tracking-wider px-5 py-2.5 rounded-full shadow-sm hover:bg-terracottaDark transition">
+          Reset All Filters
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       3B. DEDICATED AI & ML TRACK SECTION
+       ===================================================================== -->
+  <section id="aiml-track" class="py-16 sm:py-24 px-4 sm:px-8 bg-surface/80 border-b border-borderWarm">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+        <div>
+          <div class="inline-flex items-center gap-2 bg-parchment border border-borderWarm rounded-full px-3.5 py-1 mb-3">
+            <span class="w-2 h-2 rounded-full bg-terracotta"></span>
+            <span class="text-[10px] font-extrabold uppercase tracking-[0.2em] text-terracotta">Specialized Intelligence Track</span>
+          </div>
+          <h2 class="font-serif font-bold text-3xl sm:text-5xl text-espresso">
+            AI &amp; Machine Learning Showcase
+          </h2>
+          <p class="text-sm sm:text-base text-inkMuted mt-2 max-w-2xl leading-relaxed">
+            Dedicated neural architecture labs, LLM agent hackathons, computer vision benchmarks, and applied ML research sprints hosted by the <strong class="text-espresso font-semibold">IEM &times; UEM AI &amp; ML Chapters</strong>.
+          </p>
+        </div>
+
+        <div class="flex items-center gap-2.5 text-xs font-bold">
+          <span class="bg-cream border border-borderWarm px-3.5 py-2 rounded-full text-espresso">
+            <strong id="aiml-event-count" class="text-terracotta">6</strong> Dedicated AI/ML Events
+          </span>
+          <button onclick="filterLineupByAIML()" class="bg-espresso hover:bg-terracotta text-cream text-xs font-bold uppercase tracking-wider px-4 py-2 rounded-full transition">
+            View in Main Grid &rarr;
+          </button>
+        </div>
+      </div>
+
+      <!-- AI & ML Cards Grid -->
+      <div id="aiml-events-grid" class="grid grid-cols-1 md:grid-cols-2 gap-7">
+        <!-- Populated via JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       3C. MY REGISTERED EVENTS SECTION (ON-PAGE PERSONAL PASSES)
+       ===================================================================== -->
+  <section id="my-registered-events" class="py-16 sm:py-24 px-4 sm:px-8 bg-cream border-b border-borderWarm">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+        <div>
+          <div class="inline-flex items-center gap-2 bg-surface border border-borderWarm rounded-full px-3.5 py-1 mb-3">
+            <span class="w-2 h-2 rounded-full bg-sage"></span>
+            <span class="text-[10px] font-extrabold uppercase tracking-[0.2em] text-sage">Your Personal Lineup</span>
+          </div>
+          <h2 class="font-serif font-bold text-3xl sm:text-5xl text-espresso">
+            My Registered Events
+          </h2>
+          <p class="text-sm sm:text-base text-inkMuted mt-2 max-w-2xl leading-relaxed">
+            Every pass you generate on this portal appears right here with your Pass ID, QR entry code, check-in status, and quick controls.
+          </p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2.5 text-xs font-bold">
+          <span class="bg-surface border border-borderWarm px-3.5 py-2 rounded-full text-espresso">
+            <strong id="my-events-count" class="text-terracotta">0</strong> Registered
+          </span>
+          <button onclick="scrollToLineupRegistration()" class="bg-terracotta hover:bg-terracottaDark text-white text-xs font-extrabold uppercase tracking-wider px-4 py-2 rounded-full transition">
+            + Register Another Event
+          </button>
+        </div>
+      </div>
+
+      <!-- Personal Registered Events Grid / Empty State -->
+      <div id="my-registered-events-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Populated via JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       4. ORDER OF EVENTS (SEQUENTIAL RUN-OF-SHOW #01 TO #20)
+       ===================================================================== -->
+  <section id="order-of-events" class="py-16 sm:py-24 px-4 sm:px-8 bg-parchment/65 border-b border-borderWarm">
+    <div class="max-w-7xl mx-auto">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+        <div>
+          <span class="text-xs font-extrabold uppercase tracking-[0.2em] text-terracotta">Sequential Run-of-Show</span>
+          <h2 class="font-serif font-bold text-3xl sm:text-5xl text-espresso mt-1">
+            Order of Events
+          </h2>
+          <p class="text-sm text-inkMuted mt-2 max-w-xl">
+            Follow the official sequence from opening showcases to the grand finale. Click any item to inspect its brief or jump straight to registration.
+          </p>
+        </div>
+
+        <div class="flex items-center gap-2 text-xs font-bold">
+          <span class="inline-flex items-center gap-1.5 bg-surface border border-borderWarm px-3 py-1.5 rounded-full text-espresso">
+            <span class="w-2 h-2 rounded-full bg-terracotta animate-pulse"></span> Live Now
+          </span>
+          <span class="inline-flex items-center gap-1.5 bg-surface border border-borderWarm px-3 py-1.5 rounded-full text-espresso">
+            <span class="w-2 h-2 rounded-full bg-marigold"></span> Up Next
+          </span>
+        </div>
+      </div>
+
+      <!-- Ordered Event Sequence Grid -->
+      <div id="order-events-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- Populated dynamically in exact sequence -->
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       5. ORGANISED BY INSTITUTE OF ENGINEERING AND MANAGEMENT (IEM)
+       ===================================================================== -->
+  <section id="organiser" class="py-16 sm:py-24 px-4 sm:px-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="bg-espresso text-cream rounded-[28px] p-8 sm:p-12 lg:p-14 shadow-editorial relative overflow-hidden">
+        
+        <!-- Decorative Warm Radial Glow -->
+        <div class="absolute -right-24 -top-24 w-80 h-80 rounded-full bg-terracotta/20 blur-3xl pointer-events-none"></div>
+        <div class="absolute -left-24 -bottom-24 w-80 h-80 rounded-full bg-marigold/15 blur-3xl pointer-events-none"></div>
+
+        <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          
+          <!-- Left 7 Columns: Institutional Host Identity -->
+          <div class="lg:col-span-7 space-y-5">
+            <div class="inline-flex items-center gap-2.5 bg-white/10 border border-white/15 rounded-full px-4 py-1.5">
+              
+              <span class="text-[11px] font-extrabold uppercase tracking-widest text-marigoldLight">Official Host Institution</span>
+            </div>
+
+            <h2 class="font-serif font-bold text-3xl sm:text-5xl text-cream leading-tight">
+              Organised by Institute of Engineering and Management (IEM)
+            </h2>
+
+            <p class="text-sm sm:text-base text-cream/80 leading-relaxed max-w-2xl">
+              IGNITE ’26 is conceived, curated, and hosted by the <strong class="text-white font-semibold">Institute of Engineering and Management (IEM), Salt Lake, Kolkata</strong> in academic synergy with the University of Engineering and Management (UEM) — bringing together student technical chapters, research laboratories, entrepreneurship cells, and cultural societies under one unified campus calendar.
+            </p>
+          </div>
+
+          <!-- Right 5 Columns: Institutional Crest + Campus Pillars (No Individual People) -->
+          <div class="lg:col-span-5 space-y-4">
+            <div class="bg-white text-espresso rounded-2xl p-5 border border-white/15 shadow-lg flex flex-col sm:flex-row items-center gap-4">
+              <div class="shrink-0 w-44 h-28 flex items-center justify-center bg-white rounded-xl p-1">
+                <svg viewBox="0 0 260 150" class="w-full h-full" role="img" aria-label="Institute of Engineering & Management Crest">
+                  <use href="#iem-crest-mark" />
+                </svg>
+              </div>
+              <div class="text-center sm:text-left space-y-1">
+                <span class="inline-block text-[10px] font-extrabold uppercase tracking-widest text-terracotta bg-cream px-2.5 py-0.5 rounded-full">Host Crest</span>
+                <h3 class="font-serif font-bold text-lg text-espresso leading-snug">Institute of Engineering &amp; Management</h3>
+                <p class="text-xs text-inkMuted leading-relaxed">
+                  Salt Lake Electronics Complex, Kolkata &bull; Good Education, Good Jobs
+                </p>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="bg-white/5 border border-white/10 rounded-2xl p-5">
+                <span class="text-[10px] font-extrabold uppercase tracking-widest text-marigold">Technical Wing</span>
+                <h3 class="font-serif font-bold text-lg text-white mt-1">IEM Coding &amp; Robotics Chapters</h3>
+                <p class="text-xs text-cream/70 mt-1.5 leading-relaxed">
+                  Hackathons, autonomous bot arenas, and AI/ML data challenges hosted at Gurukul Labs.
+                </p>
+              </div>
+
+              <div class="bg-white/5 border border-white/10 rounded-2xl p-5">
+                <span class="text-[10px] font-extrabold uppercase tracking-widest text-terracotta">Innovation &amp; E-Cell</span>
+                <h3 class="font-serif font-bold text-lg text-white mt-1">IEM Entrepreneurship &amp; Research</h3>
+                <p class="text-xs text-cream/70 mt-1.5 leading-relaxed">
+                  Startup pitch summits, peer-reviewed poster symposiums, and industry leadership panels.
+                </p>
+              </div>
+
+              <div class="bg-white/5 border border-white/10 rounded-2xl p-5">
+                <span class="text-[10px] font-extrabold uppercase tracking-widest text-marigold">Cultural Council</span>
+                <h3 class="font-serif font-bold text-lg text-white mt-1">IEM Performing Arts &amp; Literature</h3>
+                <p class="text-xs text-cream/70 mt-1.5 leading-relaxed">
+                  Classical and contemporary music nights, debates, and open-air campus showcases.
+                </p>
+              </div>
+
+              <div class="bg-white/5 border border-white/10 rounded-2xl p-5">
+                <span class="text-[10px] font-extrabold uppercase tracking-widest text-sage">Sports Board</span>
+                <h3 class="font-serif font-bold text-lg text-white mt-1">IEM Inter-Campus Athletics</h3>
+                <p class="text-xs text-cream/70 mt-1.5 leading-relaxed">
+                  Track meets, relay championships, and inter-departmental tournaments across campuses.
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       6. EDITORIAL FOOTER
+       ===================================================================== -->
+  <footer class="bg-parchment border-t border-borderWarm pt-12 pb-10 px-4 sm:px-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 pb-8 border-b border-borderWarm">
+        <div class="flex items-start sm:items-center gap-4">
+          <div class="bg-white border border-borderWarm rounded-2xl p-2 shadow-xs shrink-0">
+            <svg viewBox="0 0 260 150" class="h-14 w-auto" role="img" aria-label="IEM Logo">
+              <use href="#iem-crest-mark" />
+            </svg>
+          </div>
+          <div>
+            <div class="flex items-center gap-2.5">
+              <span class="font-serif font-bold text-xl text-espresso">IGNITE ’26</span>
+              <span class="text-xs font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-terracotta/10 text-terracotta">IEM &times; UEM</span>
+            </div>
+            <p class="text-xs sm:text-sm text-inkMuted mt-1.5 max-w-md">
+              Organised by Institute of Engineering and Management (IEM), Salt Lake Electronics Complex, Kolkata.
+            </p>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-6 text-xs font-bold uppercase tracking-wider text-espresso">
+          <a href="#lineup" class="hover:text-terracotta transition">Semester Lineup</a>
+          <a href="#aiml-track" class="hover:text-terracotta transition">AI &amp; ML Track</a>
+          <a href="#my-registered-events" class="hover:text-terracotta transition">My Registered Events</a>
+          <a href="#order-of-events" class="hover:text-terracotta transition">Order of Events</a>
+          <a href="#organiser" class="hover:text-terracotta transition">Organised By IEM</a>
+          <button onclick="openAdminModal()" class="hover:text-terracotta transition uppercase">Organizer Hub</button>
+        </div>
+      </div>
+
+      <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-inkMuted">
+        <p>&copy; 2026 Institute of Engineering and Management (IEM) &bull; Campus Event Management System</p>
+        <a href="#top" class="font-bold uppercase tracking-wider text-espresso hover:text-terracotta transition">&uarr; Back to Top</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =====================================================================
+       7A. SLIDE-OVER EVENT DETAIL DRAWER
+       ===================================================================== -->
+  <div id="detail-drawer" class="fixed inset-0 z-50 hidden justify-end bg-espresso/60 backdrop-blur-xs">
+    <div class="bg-surface w-full max-w-lg h-full overflow-y-auto shadow-2xl border-l border-borderWarm flex flex-col justify-between p-6 sm:p-8">
+      <div id="detail-drawer-content">
+        <!-- Populated dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       7B. MY PASSES WALLET MODAL
+       ===================================================================== -->
+  <div id="passes-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-espresso/70 backdrop-blur-xs p-4 overflow-y-auto">
+    <div class="bg-cream text-espresso w-full max-w-xl rounded-[24px] shadow-2xl border border-borderWarm overflow-hidden my-8">
+      <div class="bg-espresso text-cream px-6 py-5 flex items-center justify-between">
+        <div>
+          <span class="text-[10px] font-extrabold uppercase tracking-widest text-marigold">Student Digital Wallet</span>
+          <h3 class="font-serif font-bold text-2xl">Your Registered Passes</h3>
+        </div>
+        <button onclick="closeMyPassesModal()" class="w-9 h-9 rounded-full bg-white/10 hover:bg-terracotta text-white flex items-center justify-center transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+      <div id="passes-list-container" class="p-6 max-h-[65vh] overflow-y-auto space-y-4">
+        <!-- Populated dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       7C. ORGANIZER HUB MODAL (PUBLISH EVENT, CSV EXPORT & GATE QR SCANNER)
+       ===================================================================== -->
+  <div id="admin-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-espresso/70 backdrop-blur-xs p-4 overflow-y-auto">
+    <div class="bg-cream text-espresso w-full max-w-2xl rounded-[24px] shadow-2xl border border-borderWarm overflow-hidden my-8">
+      <div class="bg-espresso text-cream px-6 py-5 flex items-center justify-between">
+        <div>
+          <span class="text-[10px] font-extrabold uppercase tracking-widest text-terracotta">IEM Organizer Console</span>
+          <h3 class="font-serif font-bold text-2xl">Event &amp; Gate Management</h3>
+        </div>
+        <button onclick="closeAdminModal()" class="w-9 h-9 rounded-full bg-white/10 hover:bg-terracotta text-white flex items-center justify-center transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+
+      <!-- Tabs -->
+      <div class="flex flex-wrap border-b border-borderWarm bg-surface px-6 pt-3 gap-5">
+        <button id="admin-tab-add" onclick="switchAdminTab('add')" class="pb-3 text-xs font-extrabold uppercase tracking-wider border-b-2 border-terracotta text-terracotta">
+          + Add Event
+        </button>
+        <button id="admin-tab-regs" onclick="switchAdminTab('regs')" class="pb-3 text-xs font-extrabold uppercase tracking-wider border-b-2 border-transparent text-inkMuted hover:text-espresso">
+          Registrations (<span id="admin-reg-count">0</span>)
+        </button>
+        <button id="admin-tab-scanner" onclick="switchAdminTab('scanner')" class="pb-3 text-xs font-extrabold uppercase tracking-wider border-b-2 border-transparent text-inkMuted hover:text-espresso">
+          Gate QR Check-In
+        </button>
+      </div>
+
+      <!-- Tab 1: Add Event -->
+      <form id="admin-add-form" onsubmit="handleCreateEvent(event)" class="p-6 space-y-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-inkMuted mb-1">Event Title</label>
+            <input id="new-ev-title" type="text" required placeholder="e.g., IEM HackSprint 2026" class="w-full bg-surface border border-borderWarm rounded-xl px-3.5 py-2 text-sm outline-none focus:border-terracotta" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-inkMuted mb-1">Category</label>
+            <select id="new-ev-category" class="w-full bg-surface border border-borderWarm rounded-xl px-3.5 py-2 text-sm outline-none focus:border-terracotta">
+              <option value="HACKATHON">HACKATHON</option>
+              <option value="CONFERENCE">CONFERENCE</option>
+              <option value="POSTER">POSTER</option>
+              <option value="WORKSHOP">WORKSHOP</option>
+              <option value="ROBOTICS">ROBOTICS</option>
+              <option value="CULTURAL">CULTURAL</option>
+              <option value="SPORTS">SPORTS</option>
+              <option value="AI & ML">AI &amp; ML</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-inkMuted mb-1">Campus</label>
+            <select id="new-ev-campus" class="w-full bg-surface border border-borderWarm rounded-xl px-3.5 py-2 text-sm outline-none focus:border-terracotta">
+              <option value="IEM Gurukul">IEM Gurukul</option>
+              <option value="IEM Management House">IEM Management House</option>
+              <option value="UEM New Town">UEM New Town</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-inkMuted mb-1">Date &amp; Time</label>
+            <input id="new-ev-date" type="text" required placeholder="e.g., 14 Feb 2027 • 10 AM" class="w-full bg-surface border border-borderWarm rounded-xl px-3.5 py-2 text-sm outline-none focus:border-terracotta" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-inkMuted mb-1">Venue Hall</label>
+            <input id="new-ev-venue" type="text" required placeholder="e.g., Gurukul Auditorium" class="w-full bg-surface border border-borderWarm rounded-xl px-3.5 py-2 text-sm outline-none focus:border-terracotta" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-inkMuted mb-1">Event Summary</label>
+          <textarea id="new-ev-desc" rows="2" required placeholder="Brief summary of the event..." class="w-full bg-surface border border-borderWarm rounded-xl px-3.5 py-2 text-sm outline-none focus:border-terracotta"></textarea>
+        </div>
+
+        <div class="flex justify-end pt-2">
+          <button type="submit" class="bg-terracotta hover:bg-terracottaDark text-white text-xs font-extrabold uppercase tracking-wider px-6 py-3 rounded-full shadow-sm transition">
+            Publish to Lineup &amp; Order &rarr;
+          </button>
+        </div>
+      </form>
+
+      <!-- Tab 2: Live Registrations + CSV Export -->
+      <div id="admin-regs-panel" class="hidden p-6 max-h-[60vh] overflow-y-auto space-y-4">
+        <div class="flex items-center justify-between">
+          <p class="text-xs font-bold text-inkMuted">Real-time student pass log</p>
+          <button onclick="exportRegistrationsCSV()" class="bg-espresso hover:bg-terracotta text-cream text-[11px] font-bold uppercase tracking-wider px-3.5 py-2 rounded-full transition">
+            Export CSV
+          </button>
+        </div>
+        <div id="admin-regs-list" class="space-y-3"></div>
+      </div>
+
+      <!-- Tab 3: Gate QR Check-In Simulator -->
+      <div id="admin-scanner-panel" class="hidden p-6 space-y-4">
+        <p class="text-xs text-inkMuted leading-relaxed">
+          Enter or paste any generated Pass ID (e.g., <code class="font-mono font-bold text-terracotta">SYN-26-XXXX</code>) to validate student entry at the auditorium gate.
+        </p>
+        <form onsubmit="verifyGatePass(event)" class="flex gap-2">
+          <input id="gate-pass-input" type="text" required placeholder="SYN-26-1234" class="flex-1 bg-surface border border-borderWarm rounded-xl px-4 py-2.5 text-sm font-mono uppercase focus:border-terracotta outline-none" />
+          <button type="submit" class="bg-espresso hover:bg-terracotta text-cream text-xs font-extrabold uppercase tracking-wider px-5 py-2.5 rounded-xl transition">
+            Verify Pass
+          </button>
+        </form>
+        <div id="gate-verify-result" class="hidden rounded-2xl p-4 border text-xs"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast-banner" class="fixed bottom-5 right-5 z-50 translate-y-24 opacity-0 transition-all duration-300 bg-espresso text-cream px-5 py-3.5 rounded-2xl shadow-xl border border-white/10 flex items-center gap-3 max-w-sm">
+    <span class="w-2.5 h-2.5 rounded-full bg-marigold shrink-0"></span>
+    <p id="toast-message" class="text-xs font-medium leading-snug"></p>
+  </div>
+
+  <!-- =====================================================================
+       JAVASCRIPT: DATA, SPOTLIGHT, LINEUP REGISTRATION, MY EVENTS, ORDER & QR
+       ===================================================================== -->
+  <script>
+    const defaultEvents = [
+      {
+        id: 'paper-trail',
+        order: 1,
+        title: 'Paper Trail Symposium',
+        category: 'POSTER',
+        isAIML: false,
+        campus: 'IEM Gurukul',
+        status: 'LIVE NOW',
+        date: '16–18 Nov 2026 • 10:00 AM',
+        venue: 'Gurukul Central Atrium',
+        seatsTotal: 120,
+        seatsFilled: 94,
+        prize: '₹15,000 + Best Paper Award',
+        description: 'Present visual research posters across AI, sustainable energy, and embedded systems to IEM faculty panels.',
+        agenda: ['10:00 AM – Poster Mounting & Setup', '11:30 AM – Faculty Jury Walkthrough', '03:30 PM – Best Research Citation'],
+        image: 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=900&q=80',
+        featured: true
+      },
+      {
+        id: 'robowars',
+        order: 2,
+        title: 'RoboWars Steel Arena',
+        category: 'ROBOTICS',
+        isAIML: false,
+        campus: 'IEM Gurukul',
+        status: 'LIVE NOW',
+        date: '16–18 Nov 2026 • 11:30 AM',
+        venue: 'IEM Robotics Courtyard',
+        seatsTotal: 80,
+        seatsFilled: 71,
+        prize: '₹35,000 Championship Trophy',
+        description: 'Custom-built combat bots face off in a high-impact steel cage tournament engineered by student robotics teams.',
+        agenda: ['11:30 AM – Bot Weight & Safety Check', '01:00 PM – Quarterfinal Knockouts', '04:30 PM – Grand Arena Finale'],
+        image: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=900&q=80',
+        featured: true
+      },
+      {
+        id: 'prototype-lab',
+        order: 3,
+        title: 'IoT & Embedded Prototype Lab',
+        category: 'WORKSHOP',
+        isAIML: false,
+        campus: 'IEM Gurukul',
+        status: 'UP NEXT',
+        date: '21 Nov 2026 • 10:00 AM',
+        venue: 'Lab Block B • Electronics Wing',
+        seatsTotal: 60,
+        seatsFilled: 46,
+        prize: 'Hardware Kit + IEM Certification',
+        description: 'Hands-on session with ESP32 microcontrollers, edge sensors, and real-time cloud telemetry.',
+        agenda: ['10:00 AM – Sensor Architecture Brief', '12:30 PM – Live Circuit Assembly', '03:00 PM – Cloud Dashboard Sync'],
+        image: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=900&q=80',
+        featured: false
+      },
+      {
+        id: 'hack-o-sphere',
+        order: 4,
+        title: 'Hack-O-Sphere 24H Sprint',
+        category: 'HACKATHON',
+        isAIML: false,
+        campus: 'UEM New Town',
+        status: 'UP NEXT',
+        date: '28–29 Nov 2026 • 24 Hours',
+        venue: 'UEM Innovation Hub',
+        seatsTotal: 200,
+        seatsFilled: 168,
+        prize: '₹50,000 Prize Pool + Incubation',
+        description: 'A 24-hour overnight product sprint where student developers build working prototypes for real civic & campus challenges.',
+        agenda: ['Day 1, 10:00 AM – Problem Track Release', 'Day 1, 09:00 PM – Mentor Code Review', 'Day 2, 11:00 AM – Final Pitch Demos'],
+        image: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=900&q=80',
+        featured: true
+      },
+      {
+        id: 'pitch-perfect',
+        order: 5,
+        title: 'Pitch Perfect E-Cell Summit',
+        category: 'CONFERENCE',
+        isAIML: false,
+        campus: 'IEM Management House',
+        status: 'UPCOMING',
+        date: '3 Dec 2026 • 11:00 AM',
+        venue: 'Management House Seminar Hall',
+        seatsTotal: 110,
+        seatsFilled: 74,
+        prize: '₹25,000 Seed Grant + Mentorship',
+        description: 'Pitch your early-stage startup venture to angel investors and IEM Entrepreneurship Cell mentors.',
+        agenda: ['11:00 AM – Founder Keynote', '12:15 PM – 7-Minute Investor Pitches', '03:15 PM – Term Sheet & Grant Awards'],
+        image: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=900&q=80',
+        featured: false
+      },
+      {
+        id: 'convergence-summit',
+        order: 6,
+        title: 'Convergence Industry Conclave',
+        category: 'CONFERENCE',
+        isAIML: false,
+        campus: 'IEM Management House',
+        status: 'UPCOMING',
+        date: '5 Dec 2026 • 09:30 AM',
+        venue: 'IEM Convention Auditorium',
+        seatsTotal: 250,
+        seatsFilled: 185,
+        prize: 'Executive Networking Pass',
+        description: 'Industry leaders, architects, and academic researchers converge for a full day of keynotes and panels.',
+        agenda: ['09:30 AM – Inaugural Address', '11:30 AM – Generative AI in Enterprise Panel', '02:30 PM – Alumni Leadership Fireside'],
+        image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=900&q=80',
+        featured: true
+      },
+      {
+        id: 'sprint-cup',
+        order: 7,
+        title: 'IEM × UEM Sprint Cup',
+        category: 'SPORTS',
+        isAIML: false,
+        campus: 'UEM New Town',
+        status: 'UPCOMING',
+        date: '8–10 Dec 2026 • 07:30 AM',
+        venue: 'Central Athletics Ground',
+        seatsTotal: 180,
+        seatsFilled: 122,
+        prize: 'Chancellor’s Rolling Cup',
+        description: 'Track and field events, 4x100m relay races, and inter-departmental tournaments across three mornings.',
+        agenda: ['07:30 AM – Track Heats & Long Jump', '11:00 AM – Inter-Dept Relay Qualifiers', '04:00 PM – Medal Ceremony'],
+        image: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=900&q=80',
+        featured: false
+      },
+      {
+        id: 'raag-rhythm',
+        order: 8,
+        title: 'Raag & Rhythm Cultural Night',
+        category: 'CULTURAL',
+        isAIML: false,
+        campus: 'IEM Gurukul',
+        status: 'UPCOMING',
+        date: '12 Dec 2026 • 05:00 PM',
+        venue: 'Open Air Amphitheatre',
+        seatsTotal: 300,
+        seatsFilled: 245,
+        prize: 'Cultural Excellence Honours',
+        description: 'An evening of Indian classical recitals, indie bands, and contemporary choreography under the open sky.',
+        agenda: ['05:00 PM – Classical Acoustic Opening', '06:45 PM – Contemporary Dance Showcase', '08:30 PM – Headliner Band Finale'],
+        image: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=900&q=80',
+        featured: false
+      },
+      {
+        id: 'data-drift',
+        order: 9,
+        title: 'Data Drift Analytics Challenge',
+        category: 'HACKATHON',
+        isAIML: false,
+        campus: 'IEM Gurukul',
+        status: 'UPCOMING',
+        date: '19 Dec 2026 • 10:00 AM',
+        venue: 'Central Computer Centre',
+        seatsTotal: 100,
+        seatsFilled: 69,
+        prize: '₹20,000 + Kaggle Swag Kit',
+        description: 'Wrangle real-world urban & healthcare datasets, train predictive models, and defend your metrics.',
+        agenda: ['10:00 AM – Dataset & Schema Release', '01:30 PM – Leaderboard Freeze', '03:30 PM – Top-5 Jury Presentation'],
+        image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=80',
+        featured: false
+      },
+      /* --- Dedicated AI & ML Track Events (#13 - #18) --- */
+      {
+        id: 'iete-isf-inauguration',
+        order: 13,
+        title: 'Grand Opening Ceremony of IETE Students’ Chapter (IETE ISF)',
+        category: 'AI & ML',
+        isAIML: true,
+        campus: 'IEM Gurukul',
+        status: 'UP NEXT',
+        date: 'January 6th, 2026',
+        venue: 'IEDC CSE Section, 10th Floor, Godrej Genesis Building',
+        seatsTotal: 150,
+        seatsFilled: 124,
+        prize: 'Student Chapter Inauguration & Certificate Distribution',
+        description: 'The Department of CSBS & CSE (AI & ML), Institute of Engineering & Management (IEM), Saltlake, successfully organized the Grand Opening Ceremony of the IETE Students’ Chapter (IETE ISF), marking a milestone in technical excellence, professional growth, and leadership.',
+        agenda: [
+          'Guests of Honour: Prof. (Dr.) Jyotsna Kumar Mandal – General Council Member, IETE',
+          'Prof. (Dr.) Debashis De – Immediate Past Chairman, IETE, Kolkata Centre',
+          'Prof. (Dr.) Jyoti Sekhar Banerjee – Honorary Secretary, IETE, Kolkata Centre',
+          'Certificate Distribution Ceremony & Global Networking Initiative'
+        ],
+        image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=900&q=80',
+        featured: true
+      },
+      {
+        id: 'ai-iot-fdp-2025',
+        order: 14,
+        title: 'Problem Solving Strategies for Real-World Applications Using AI and IoT',
+        category: 'AI & ML',
+        isAIML: true,
+        campus: 'IEM Gurukul',
+        status: 'UPCOMING',
+        date: 'October 13th – 17th, 2025 • 4:00 PM – 5:30 PM',
+        venue: 'IEDC Section (CSE), 10th Floor, Godrej Genesis Building',
+        seatsTotal: 120,
+        seatsFilled: 98,
+        prize: '5-Day Faculty Development Program (FDP)',
+        description: 'The Department of CSE (AIML) & CSBS, IEM Saltlake, organized a 5-Day Faculty Development Program (FDP) on leveraging AI and IoT to address real-world challenges through innovative, data-driven approaches.',
+        agenda: [
+          'Eminent Speakers: Dr. Saptarshi Chatterjee (NIT Rourkela), Dr. Arnab Kumar Maji (NEHU), Dr. Soumya Chatterjee (NIT Durgapur)',
+          'Dr. Jyostna Kumar Mandal (Kalyani University), Dr. Debashis De (MAKAUT), Dr. Chandrayee Chowdhury (Jadavpur University)',
+          'Coordinators: Dr. Sudipta Bhattacharya, Prof. Debasree Sarkar, Prof. Tumpa Nath Tripathi',
+          'Patron: Prof. (Dr.) Satyajit Chakrabarti • Convener: Dr. Amartya Mukherjee'
+        ],
+        image: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=900&q=80',
+        featured: false
+      },
+      {
+        id: 'idea-summit-2026',
+        order: 15,
+        title: 'IDEA Summit 2026 – Poster Presentation Event',
+        category: 'AI & ML',
+        isAIML: true,
+        campus: 'IEM Gurukul',
+        status: 'UPCOMING',
+        date: 'July 2nd – July 3rd, 2026',
+        venue: 'Institute of Engineering & Management (IEM), Kolkata',
+        seatsTotal: 160,
+        seatsFilled: 132,
+        prize: 'Best Poster Presentation Award',
+        description: 'Organized by Dept. of CSE (AI & ML) & CSBS, IEM Kolkata, providing a platform to showcase research in AI, Machine Learning, Data Science, IoT, Cyber Security, and emerging technologies before an expert evaluation committee.',
+        agenda: [
+          'Focus Areas: Artificial Intelligence, Machine Learning, Data Science, IoT, Cyber Security',
+          'Research Poster Presentation & Expert Evaluation Committee Review',
+          'Technical Discussions, Methodology Defense & Best Poster Presentation Award'
+        ],
+        image: 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=900&q=80',
+        featured: true
+      },
+      {
+        id: 'axiora-2026-hackathon',
+        order: 16,
+        title: 'AXIORA 2026 – National Level Online Hackathon',
+        category: 'AI & ML',
+        isAIML: true,
+        campus: 'UEM New Town',
+        status: 'UPCOMING',
+        date: 'March 17th – March 20th, 2026',
+        venue: 'Valedictory Session at IIT Kharagpur Research Park, Newtown',
+        seatsTotal: 250,
+        seatsFilled: 210,
+        prize: 'Total Prize Pool: ₹15,000',
+        description: 'Organized by Dept. of CSBS & CSE (AI & ML), IEM Saltlake, under IETE Students’ Chapter (ISF) in association with IETE and partners C2IOT, CEDS, and IEDC, with 150+ BTech students across India.',
+        agenda: [
+          'Tracks: Robotics and Drone Systems • IoT Applications • AI Applications',
+          'Partners: IETE, C2IOT, CEDS, and IEDC (150+ BTech Participants)',
+          'Valedictory Session at IIT Kharagpur Research Park, Newtown (March 20th, 2026)'
+        ],
+        image: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=900&q=80',
+        featured: false
+      },
+      {
+        id: 'iete-tutorial-uav-2026',
+        order: 17,
+        title: 'IETE Tutorial Series Workshop – Aerial Robotics and UAV Systems',
+        category: 'AI & ML',
+        isAIML: true,
+        campus: 'IEM Gurukul',
+        status: 'UPCOMING',
+        date: 'September 24th, 2026',
+        venue: 'IEM Saltlake, Kolkata',
+        seatsTotal: 140,
+        seatsFilled: 112,
+        prize: 'IETE Annual International Conference (AIC) 2026 Workshop',
+        description: 'Jointly organized by IETE ISF of CSBS & CSE (AIML), IEM Saltlake, with IETE Kolkata Section as part of IETE Annual International Conference (AIC) 2026.',
+        agenda: [
+          'Chief Guest: Prof. Tapash Chakraborty, VC, MAKAUT, WB',
+          'Distinguished Guests: Dr. D. C. Pandey (IETE HQ), Prof. J. K. Mandal, Prof. Debashis De, Maj. H. Panday, Mrs. S. Ghosh',
+          'Resource Persons: Prof. Debashis De, Dr. Amartya Mukherjee, Prof. Banashree Mandal, Mr. Soumanka Sarkar'
+        ],
+        image: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=900&q=80',
+        featured: false
+      },
+      {
+        id: 'deep-learning-transfer-workshop',
+        order: 18,
+        title: 'Deep Learning and Transfer Learning – One-Day Workshop',
+        category: 'AI & ML',
+        isAIML: true,
+        campus: 'UEM New Town',
+        status: 'UPCOMING',
+        date: 'October 6th, 2026',
+        venue: 'AI Campus',
+        seatsTotal: 130,
+        seatsFilled: 105,
+        prize: 'Hands-On AI Workshop Certificate',
+        description: 'Conducted by the Department of CSE (AIML), CSBS at AI Campus, introducing deep neural networks and transfer learning with pre-trained models for efficient machine-learning solutions.',
+        agenda: [
+          'Fundamentals of Deep Neural Networks & Transfer Learning',
+          'Adapting Pre-Trained Models to Reduce Training Time & Compute',
+          'Live Demonstrations & Hands-On Interactive Sessions'
+        ],
+        image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=900&q=80',
+        featured: false
+      },
+      /* --- Additional Campus Events (#19 - #20) --- */
+      {
+        id: 'cyber-citadel-ctf',
+        order: 19,
+        title: 'CyberCitadel Capture The Flag',
+        category: 'HACKATHON',
+        isAIML: false,
+        campus: 'IEM Gurukul',
+        status: 'UPCOMING',
+        date: '21 Feb 2027 • 10:00 AM',
+        venue: 'Gurukul Network Security Lab',
+        seatsTotal: 120,
+        seatsFilled: 88,
+        prize: '₹25,000 + Security Lab Pass',
+        description: 'Jeopardy-style web exploitation, cryptography, reverse engineering, and forensics challenges.',
+        agenda: ['10:00 AM – CTF Scoreboard Kickoff', '02:00 PM – Mid-Contest Hint Drop', '05:00 PM – Top Team Walkthrough'],
+        image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=900&q=80',
+        featured: false
+      },
+      {
+        id: 'quantum-horizon-talk',
+        order: 20,
+        title: 'Quantum Horizon Colloquium',
+        category: 'CONFERENCE',
+        isAIML: false,
+        campus: 'UEM New Town',
+        status: 'UPCOMING',
+        date: '27 Feb 2027 • 11:00 AM',
+        venue: 'UEM Convention Hall',
+        seatsTotal: 160,
+        seatsFilled: 104,
+        prize: 'Quantum Computing Workshop Certificate',
+        description: 'Explore qubit error correction, variational quantum algorithms, and post-quantum cryptography.',
+        agenda: ['11:00 AM – Qubit Hardware Overview', '01:30 PM – Quantum ML Circuits Demo', '03:30 PM – Student Q&A Panel'],
+        image: 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=900&q=80',
+        featured: false
+      }
+    ];
+
+    let events = [];
+    let registrations = [];
+    let activeCampus = 'ALL CAMPUSES';
+    let activeCategory = 'ALL';
+    let searchQuery = '';
+    let spotlightIndex = 0;
+    let inlineRegType = 'Individual';
+
+    const campuses = ['ALL CAMPUSES', 'IEM Gurukul', 'IEM Management House', 'UEM New Town'];
+    const categories = ['ALL', 'AI & ML', 'LIVE NOW', 'UP NEXT', 'HACKATHON', 'CONFERENCE', 'POSTER', 'WORKSHOP', 'ROBOTICS', 'CULTURAL', 'SPORTS'];
+
+    function loadAppState() {
+      try {
+        const savedEvents = localStorage.getItem('ignite26_iem_events_v3');
+        const savedRegs = localStorage.getItem('ignite26_iem_regs_v3');
+        events = savedEvents ? JSON.parse(savedEvents) : [...defaultEvents];
+        registrations = savedRegs ? JSON.parse(savedRegs) : [];
+      } catch (e) {
+        events = [...defaultEvents];
+        registrations = [];
+      }
+    }
+
+    function saveAppState() {
+      try {
+        localStorage.setItem('ignite26_iem_events_v3', JSON.stringify(events));
+        localStorage.setItem('ignite26_iem_regs_v3', JSON.stringify(registrations));
+      } catch (e) {
+        console.warn('Storage unavailable');
+      }
+      updateBadges();
+      renderMyRegisteredEvents();
+    }
+
+    // =========================================================================
+    // 2. HERO SPOTLIGHT CARD WITH LIVE COUNTDOWN
+    // =========================================================================
+    function renderSpotlight() {
+      const featured = events.filter(ev => ev.featured);
+      if (!featured.length) return;
+      if (spotlightIndex >= featured.length) spotlightIndex = 0;
+
+      const ev = featured[spotlightIndex];
+      document.getElementById('spotlight-counter').textContent = `${spotlightIndex + 1} / ${featured.length}`;
+
+      const pct = Math.min(100, Math.round((ev.seatsFilled / ev.seatsTotal) * 100));
+      const seatsLeft = Math.max(0, ev.seatsTotal - ev.seatsFilled);
+
+      document.getElementById('spotlight-card-body').innerHTML = `
+        <div class="relative h-52 overflow-hidden bg-espresso">
+          <img
+            src="${ev.image}"
+            onerror="this.src='https://placehold.co/800x450/1E1916/F7F3EA?text=${encodeURIComponent(ev.title)}'"
+            alt="${ev.title}"
+            class="w-full h-full object-cover brightness-90"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-espresso/85 via-espresso/20 to-transparent"></div>
+          <div class="absolute top-3.5 left-3.5 flex items-center gap-2">
+            <span class="bg-surface/95 text-espresso text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-sm">
+              #${String(ev.order).padStart(2, '0')} &bull; ${ev.category}
+            </span>
+            <span class="bg-terracotta text-white text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full">
+              ${ev.campus}
+            </span>
+          </div>
+          <div class="absolute bottom-3.5 left-4 right-4 text-cream">
+            <h3 class="font-serif font-bold text-2xl leading-tight">${ev.title}</h3>
+            <p class="text-xs text-cream/80 mt-0.5">${ev.date} &bull; ${ev.venue}</p>
+          </div>
+        </div>
+
+        <div class="p-5 space-y-4">
+          <!-- Live Countdown Strip -->
+          <div class="grid grid-cols-4 gap-2 bg-cream rounded-2xl p-3 border border-borderWarm text-center">
+            <div>
+              <span id="cd-days" class="block font-serif font-bold text-lg text-espresso">02</span>
+              <span class="text-[10px] font-bold uppercase text-inkMuted">Days</span>
+            </div>
+            <div>
+              <span id="cd-hours" class="block font-serif font-bold text-lg text-terracotta">14</span>
+              <span class="text-[10px] font-bold uppercase text-inkMuted">Hrs</span>
+            </div>
+            <div>
+              <span id="cd-mins" class="block font-serif font-bold text-lg text-espresso">38</span>
+              <span class="text-[10px] font-bold uppercase text-inkMuted">Mins</span>
+            </div>
+            <div>
+              <span id="cd-secs" class="block font-serif font-bold text-lg text-marigold">45</span>
+              <span class="text-[10px] font-bold uppercase text-inkMuted">Secs</span>
+            </div>
+          </div>
+
+          <!-- Seat Availability Progress -->
+          <div>
+            <div class="flex items-center justify-between text-xs mb-1.5">
+              <span class="font-bold text-espresso">${seatsLeft} seats remaining</span>
+              <span class="text-inkMuted font-semibold">${pct}% booked</span>
+            </div>
+            <div class="w-full h-2 bg-parchment rounded-full overflow-hidden">
+              <div style="width: ${pct}%" class="h-full bg-terracotta rounded-full transition-all duration-500"></div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2.5 pt-1">
+            <button onclick="selectEventForInlineReg('${ev.id}')" class="flex-1 bg-terracotta hover:bg-terracottaDark text-white text-xs font-extrabold uppercase tracking-wider py-3 rounded-xl shadow-sm transition">
+              Register Now &rarr;
+            </button>
+            <button onclick="openDetailDrawer('${ev.id}')" class="bg-parchment hover:bg-espresso hover:text-cream text-espresso text-xs font-bold px-4 py-3 rounded-xl transition">
+              Brief
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function cycleSpotlight(delta) {
+      const count = events.filter(ev => ev.featured).length;
+      spotlightIndex = (spotlightIndex + delta + count) % count;
+      renderSpotlight();
+    }
+
+    // Live ticking countdown
+    let countdownSeconds = 2 * 86400 + 14 * 3600 + 38 * 60 + 45;
+    setInterval(() => {
+      if (countdownSeconds > 0) countdownSeconds--;
+      const d = Math.floor(countdownSeconds / 86400);
+      const h = Math.floor((countdownSeconds % 86400) / 3600);
+      const m = Math.floor((countdownSeconds % 3600) / 60);
+      const s = countdownSeconds % 60;
+      const dEl = document.getElementById('cd-days');
+      if (dEl) {
+        dEl.textContent = String(d).padStart(2, '0');
+        document.getElementById('cd-hours').textContent = String(h).padStart(2, '0');
+        document.getElementById('cd-mins').textContent = String(m).padStart(2, '0');
+        document.getElementById('cd-secs').textContent = String(s).padStart(2, '0');
+      }
+    }, 1000);
+
+    // =========================================================================
+    // 3. SEMESTER LINEUP FILTERS, GRID & INTEGRATED REGISTRATION
+    // =========================================================================
+    function renderLineupFilters() {
+      const campusBar = document.getElementById('campus-filter-bar');
+      campusBar.innerHTML = campuses.map(c => {
+        const active = activeCampus === c;
+        return `
+          <button onclick="setCampusFilter('${c}')" class="px-3 py-1.5 rounded-full text-xs font-bold transition ${
+            active
+              ? 'bg-espresso text-cream shadow-xs'
+              : 'bg-cream text-inkMuted hover:text-espresso border border-borderWarm'
+          }">
+            ${c}
+          </button>
+        `;
+      }).join('');
+
+      const catBar = document.getElementById('category-filter-bar');
+      catBar.innerHTML = categories.map(cat => {
+        const active = activeCategory === cat;
+        return `
+          <button onclick="setCategoryFilter('${cat}')" class="shrink-0 px-3.5 py-1.5 rounded-full text-xs font-extrabold uppercase tracking-wider transition ${
+            active
+              ? 'bg-terracotta text-white shadow-xs'
+              : 'bg-cream/80 text-inkMuted hover:bg-parchment hover:text-espresso border border-borderWarm'
+          }">
+            ${cat}
+          </button>
+        `;
+      }).join('');
+    }
+
+    function setCampusFilter(campus) {
+      activeCampus = campus;
+      renderLineupFilters();
+      renderEventsGrid();
+    }
+
+    function setCategoryFilter(cat) {
+      activeCategory = cat;
+      renderLineupFilters();
+      renderEventsGrid();
+    }
+
+    function handleSearch(val) {
+      searchQuery = val.trim().toLowerCase();
+      renderEventsGrid();
+    }
+
+    function resetAllFilters() {
+      activeCampus = 'ALL CAMPUSES';
+      activeCategory = 'ALL';
+      searchQuery = '';
+      document.getElementById('event-search-input').value = '';
+      renderLineupFilters();
+      renderEventsGrid();
+    }
+
+    function renderEventsGrid() {
+      const grid = document.getElementById('events-grid');
+      const empty = document.getElementById('events-empty-state');
+      const countEl = document.getElementById('visible-event-count');
+
+      const filtered = events.filter(ev => {
+        const matchCampus = activeCampus === 'ALL CAMPUSES' || ev.campus === activeCampus;
+        const matchCat = activeCategory === 'ALL' || ev.status === activeCategory || ev.category === activeCategory;
+        const matchSearch =
+          !searchQuery ||
+          ev.title.toLowerCase().includes(searchQuery) ||
+          ev.venue.toLowerCase().includes(searchQuery) ||
+          ev.description.toLowerCase().includes(searchQuery);
+        return matchCampus && matchCat && matchSearch;
+      });
+
+      countEl.textContent = filtered.length;
+
+      if (!filtered.length) {
+        grid.innerHTML = '';
+        empty.classList.remove('hidden');
+        return;
+      }
+
+      empty.classList.add('hidden');
+
+      grid.innerHTML = filtered.map(ev => {
+        const seatsLeft = Math.max(0, ev.seatsTotal - ev.seatsFilled);
+        const statusBadge =
+          ev.status === 'LIVE NOW'
+            ? 'bg-terracotta text-white'
+            : ev.status === 'UP NEXT'
+            ? 'bg-marigold text-espresso'
+            : 'bg-parchment text-espresso border border-borderWarm';
+
+        return `
+          <article class="event-card bg-surface rounded-[24px] border border-borderWarm shadow-editorial hover:shadow-editorial-hover overflow-hidden flex flex-col justify-between transition-all duration-300 hover:-translate-y-1">
+            <div>
+              <div onclick="openDetailDrawer('${ev.id}')" class="cursor-pointer relative aspect-[16/10] overflow-hidden bg-espresso">
+                <img
+                  src="${ev.image}"
+                  onerror="this.src='https://placehold.co/800x500/1E1916/F7F3EA?text=${encodeURIComponent(ev.title)}'"
+                  alt="${ev.title}"
+                  class="card-img w-full h-full object-cover"
+                />
+                <div class="absolute top-3 left-3 flex items-center gap-1.5">
+                  <span class="bg-surface/95 backdrop-blur-xs text-espresso text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full shadow-xs">
+                    #${String(ev.order).padStart(2, '0')} &bull; ${ev.category}
+                  </span>
+                </div>
+                <span class="absolute top-3 right-3 text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full ${statusBadge}">
+                  ${ev.status}
+                </span>
+              </div>
+
+              <div class="p-6 pb-4">
+                <div class="flex items-center justify-between text-[11px] font-bold text-terracotta mb-1.5">
+                  <span>${ev.campus}</span>
+                  <span class="text-inkMuted">${seatsLeft} seats left</span>
+                </div>
+
+                <h3 onclick="openDetailDrawer('${ev.id}')" class="cursor-pointer font-serif font-bold text-2xl text-espresso hover:text-terracotta transition leading-snug mb-2">
+                  ${ev.title}
+                </h3>
+
+                <p class="text-xs font-semibold text-inkMuted mb-3">
+                  ${ev.date} &bull; ${ev.venue}
+                </p>
+
+                <p class="text-sm text-inkMuted leading-relaxed">
+                  ${ev.description}
+                </p>
+              </div>
+            </div>
+
+            <div class="px-6 pb-6 pt-3 border-t border-borderWarm/70 flex items-center justify-between gap-2">
+              <button onclick="openDetailDrawer('${ev.id}')" class="text-xs font-bold text-inkMuted hover:text-espresso transition">
+                View Agenda
+              </button>
+              <button onclick="selectEventForInlineReg('${ev.id}')" class="bg-espresso hover:bg-terracotta text-cream text-xs font-bold uppercase tracking-wider px-4 py-2 rounded-full transition flex items-center gap-1.5">
+                <span>Register</span>
+                <span>&rarr;</span>
+              </button>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    // Dedicated AI & ML Track Section Renderer
+    function renderAIMLTrack() {
+      const aimlGrid = document.getElementById('aiml-events-grid');
+      const countBadge = document.getElementById('aiml-event-count');
+      if (!aimlGrid) return;
+
+      const aimlEvents = events.filter(ev => ev.isAIML || ev.category === 'AI & ML');
+      if (countBadge) countBadge.textContent = aimlEvents.length;
+
+      aimlGrid.innerHTML = aimlEvents.map(ev => {
+        const seatsLeft = Math.max(0, ev.seatsTotal - ev.seatsFilled);
+        return `
+          <article class="event-card bg-surface rounded-[24px] border border-borderWarm shadow-editorial hover:shadow-editorial-hover overflow-hidden flex flex-col justify-between transition-all duration-300 hover:-translate-y-1">
+            <div>
+              <div onclick="openDetailDrawer('${ev.id}')" class="cursor-pointer relative aspect-[16/9] overflow-hidden bg-espresso">
+                <img
+                  src="${ev.image}"
+                  onerror="this.src='https://placehold.co/800x450/1E1916/F7F3EA?text=${encodeURIComponent(ev.title)}'"
+                  alt="${ev.title}"
+                  class="card-img w-full h-full object-cover"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-espresso/80 via-espresso/15 to-transparent"></div>
+                <div class="absolute top-3.5 left-3.5 flex items-center gap-2">
+                  <span class="bg-terracotta text-white text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full">
+                    AI &amp; ML Track &bull; #${String(ev.order).padStart(2, '0')}
+                  </span>
+                  <span class="bg-surface/95 text-espresso text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full">
+                    ${ev.campus}
+                  </span>
+                </div>
+                <div class="absolute bottom-3.5 left-4 right-4 text-cream">
+                  <h3 class="font-serif font-bold text-2xl leading-tight">${ev.title}</h3>
+                  <p class="text-xs text-cream/80 mt-0.5">${ev.date} &bull; ${ev.venue}</p>
+                </div>
+              </div>
+
+              <div class="p-6 pb-4">
+                <div class="flex items-center justify-between text-xs font-bold mb-2">
+                  <span class="text-terracotta">${ev.prize}</span>
+                  <span class="text-sage">${seatsLeft} seats open</span>
+                </div>
+                <p class="text-sm text-inkMuted leading-relaxed">${ev.description}</p>
+              </div>
+            </div>
+
+            <div class="px-6 pb-6 pt-3 border-t border-borderWarm/70 flex items-center justify-between gap-2">
+              <button onclick="openDetailDrawer('${ev.id}')" class="text-xs font-bold text-inkMuted hover:text-espresso transition">
+                Inspect Syllabus &amp; Agenda
+              </button>
+              <button onclick="selectEventForInlineReg('${ev.id}')" class="bg-terracotta hover:bg-terracottaDark text-white text-xs font-extrabold uppercase tracking-wider px-4 py-2 rounded-full transition flex items-center gap-1.5">
+                <span>Register AI/ML Pass</span>
+                <span>&rarr;</span>
+              </button>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function filterLineupByAIML() {
+      setCategoryFilter('AI & ML');
+      document.getElementById('lineup').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // On-Page Personal Registered Events Renderer
+    function renderMyRegisteredEvents() {
+      const grid = document.getElementById('my-registered-events-grid');
+      const countEl = document.getElementById('my-events-count');
+      if (!grid) return;
+
+      if (countEl) countEl.textContent = registrations.length;
+
+      if (!registrations.length) {
+        grid.innerHTML = `
+          <div class="md:col-span-2 lg:col-span-3 bg-surface rounded-[24px] border border-dashed border-borderWarm p-10 text-center space-y-3">
+            <p class="font-serif font-bold text-2xl text-espresso">You haven't registered for any events yet</p>
+            <p class="text-xs sm:text-sm text-inkMuted max-w-md mx-auto">
+              Pick any event from the Semester Lineup or AI &amp; ML Track to generate your Pass ID and QR code here.
+            </p>
+            <div class="pt-2">
+              <button onclick="scrollToLineupRegistration()" class="bg-terracotta hover:bg-terracottaDark text-white text-xs font-extrabold uppercase tracking-wider px-5 py-2.5 rounded-full transition">
+                Register for Your First Event &rarr;
+              </button>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = registrations.map(reg => `
+        <article class="bg-surface rounded-[24px] border border-borderWarm shadow-editorial p-5 flex flex-col justify-between gap-4">
+          <div class="space-y-2.5">
+            <div class="flex items-center justify-between gap-2">
+              <div class="flex items-center gap-2">
+                <span class="bg-terracotta text-white text-[10px] font-extrabold px-2.5 py-0.5 rounded-full">#${reg.passId}</span>
+                <span class="text-[11px] font-bold text-inkMuted">${reg.type}</span>
+              </div>
+              <span class="text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full ${
+                reg.checkedIn ? 'bg-sage text-white' : 'bg-parchment text-espresso'
+              }">
+                ${reg.checkedIn ? 'Checked In' : 'Active Pass'}
+              </span>
+            </div>
+
+            <h3 class="font-serif font-bold text-xl text-espresso leading-snug">${reg.eventTitle}</h3>
+            <p class="text-xs text-inkMuted">${reg.eventMeta}</p>
+
+            <div class="pt-2 border-t border-borderWarm/70 text-xs space-y-0.5">
+              <p class="font-bold text-espresso">${reg.name} <span class="font-mono text-terracotta">(${reg.roll})</span></p>
+              <p class="text-inkMuted">${reg.campus} &bull; ${reg.dept}</p>
+              ${reg.teamName ? `<p class="text-inkMuted">Team: <strong class="text-espresso">${reg.teamName}</strong></p>` : ''}
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-borderWarm/70 flex items-center justify-between gap-3">
+            <div class="w-16 h-16 bg-cream p-1.5 rounded-xl border border-borderWarm shrink-0">
+              ${generateVisualQR(reg.passId + reg.roll)}
+            </div>
+            <div class="flex flex-col items-end gap-1.5">
+              <span class="text-[10px] text-inkMuted">Issued ${reg.timestamp}</span>
+              <div class="flex items-center gap-2">
+                <button onclick="openDetailDrawer('${reg.eventId}')" class="bg-parchment hover:bg-espresso hover:text-cream text-espresso text-[11px] font-bold px-3 py-1.5 rounded-lg transition">
+                  Agenda
+                </button>
+                <button onclick="cancelRegistrationPass('${reg.passId}')" class="bg-surface hover:bg-terracotta hover:text-white border border-borderWarm text-terracotta text-[11px] font-bold px-3 py-1.5 rounded-lg transition">
+                  Cancel Pass
+                </button>
+              </div>
+            </div>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function cancelRegistrationPass(passId) {
+      const idx = registrations.findIndex(r => r.passId === passId);
+      if (idx === -1) return;
+      const [removed] = registrations.splice(idx, 1);
+      const ev = events.find(item => item.id === removed.eventId);
+      if (ev && ev.seatsFilled > 0) {
+        ev.seatsFilled -= 1;
+      }
+      saveAppState();
+      renderSpotlight();
+      renderEventsGrid();
+      renderAIMLTrack();
+      syncInlinePreview();
+      showToast(`Cancelled pass #${passId} for ${removed.eventTitle}.`);
+    }
+
+    // Inline Registration inside Semester Lineup
+    function populateInlineEventSelect(selectedId = null) {
+      const select = document.getElementById('inline-reg-event');
+      select.innerHTML = events.map(ev => `
+        <option value="${ev.id}" ${ev.id === selectedId ? 'selected' : ''}>
+          #${String(ev.order).padStart(2, '0')} — ${ev.title} (${ev.campus})
+        </option>
+      `).join('');
+      syncInlinePreview();
+    }
+
+    function syncInlinePreview() {
+      const id = document.getElementById('inline-reg-event').value;
+      const ev = events.find(item => item.id === id) || events[0];
+      if (!ev) return;
+      const seatsLeft = Math.max(0, ev.seatsTotal - ev.seatsFilled);
+
+      document.getElementById('inline-selected-preview').innerHTML = `
+        <span class="text-[10px] font-extrabold uppercase tracking-wider text-inkMuted">Selected Sequence #${String(ev.order).padStart(2, '0')}</span>
+        <p class="font-serif font-bold text-lg text-espresso leading-snug">${ev.title}</p>
+        <p class="text-xs text-inkMuted">${ev.date}</p>
+        <p class="text-xs font-semibold text-espresso">${ev.campus} • ${ev.venue}</p>
+        <div class="pt-2 flex items-center justify-between text-[11px] font-bold">
+          <span class="text-sage">${seatsLeft} seats open</span>
+          <span class="text-terracotta">${ev.prize}</span>
+        </div>
+      `;
+    }
+
+    function setInlineRegType(type) {
+      inlineRegType = type;
+      const soloBtn = document.getElementById('inline-type-solo');
+      const teamBtn = document.getElementById('inline-type-team');
+      const teamBox = document.getElementById('inline-team-box');
+
+      if (type === 'Individual') {
+        soloBtn.className = 'py-2.5 px-3 rounded-xl text-xs font-bold border border-espresso bg-espresso text-cream transition';
+        teamBtn.className = 'py-2.5 px-3 rounded-xl text-xs font-bold border border-borderWarm bg-cream/60 text-espresso hover:bg-parchment transition';
+        teamBox.classList.add('hidden');
+      } else {
+        teamBtn.className = 'py-2.5 px-3 rounded-xl text-xs font-bold border border-espresso bg-espresso text-cream transition';
+        soloBtn.className = 'py-2.5 px-3 rounded-xl text-xs font-bold border border-borderWarm bg-cream/60 text-espresso hover:bg-parchment transition';
+        teamBox.classList.remove('hidden');
+      }
+    }
+
+    function selectEventForInlineReg(eventId) {
+      resetInlineForm();
+      populateInlineEventSelect(eventId);
+      const panel = document.getElementById('lineup-register-panel');
+      panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      panel.classList.add('ring-2', 'ring-terracotta');
+      setTimeout(() => panel.classList.remove('ring-2', 'ring-terracotta'), 1600);
+    }
+
+    function scrollToLineupRegistration() {
+      resetInlineForm();
+      document.getElementById('lineup-register-panel').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function submitInlineRegistration(e) {
+      e.preventDefault();
+      const eventId = document.getElementById('inline-reg-event').value;
+      const ev = events.find(item => item.id === eventId) || events[0];
+
+      if (ev.seatsFilled < ev.seatsTotal) {
+        ev.seatsFilled += 1;
+      }
+
+      const passId = 'SYN-26-' + Math.floor(1000 + Math.random() * 9000);
+      const record = {
+        passId,
+        eventId: ev.id,
+        eventTitle: ev.title,
+        eventMeta: `${ev.date} • ${ev.venue}`,
+        type: inlineRegType,
+        teamName: inlineRegType === 'Individual' ? '' : (document.getElementById('inline-reg-team').value.trim() || 'IEM Squad'),
+        name: document.getElementById('inline-reg-name').value.trim(),
+        roll: document.getElementById('inline-reg-roll').value.trim(),
+        email: document.getElementById('inline-reg-email').value.trim(),
+        campus: document.getElementById('inline-reg-campus').value,
+        dept: document.getElementById('inline-reg-dept').value,
+        checkedIn: false,
+        timestamp: new Date().toLocaleString()
+      };
+
+      registrations.unshift(record);
+      saveAppState();
+      renderSpotlight();
+      renderEventsGrid();
+      renderAIMLTrack();
+      syncInlinePreview();
+
+      // Show Instant Ticket inside Semester Lineup
+      document.getElementById('inline-ticket-id').textContent = '#' + record.passId;
+      document.getElementById('inline-ticket-event').textContent = record.eventTitle;
+      document.getElementById('inline-ticket-meta').textContent = record.eventMeta;
+      document.getElementById('inline-ticket-holder').textContent = `${record.name} (${record.roll}) • ${record.type}`;
+      document.getElementById('inline-ticket-qr').innerHTML = generateVisualQR(passId + record.roll);
+
+      document.getElementById('inline-registration-form').classList.add('hidden');
+      document.getElementById('inline-ticket-result').classList.remove('hidden');
+
+      showToast(`Pass #${passId} issued for ${ev.title}!`);
+    }
+
+    function resetInlineForm() {
+      document.getElementById('inline-registration-form').classList.remove('hidden');
+      document.getElementById('inline-ticket-result').classList.add('hidden');
+    }
+
+    // =========================================================================
+    // 4. ORDER OF EVENTS (SEQUENTIAL RUN-OF-SHOW)
+    // =========================================================================
+    function renderOrderOfEvents() {
+      const container = document.getElementById('order-events-list');
+      const ordered = [...events].sort((a, b) => (a.order || 99) - (b.order || 99));
+
+      container.innerHTML = ordered.map((ev, idx) => {
+        const seqNum = String(ev.order || idx + 1).padStart(2, '0');
+        const dotColor =
+          ev.status === 'LIVE NOW'
+            ? 'bg-terracotta'
+            : ev.status === 'UP NEXT'
+            ? 'bg-marigold'
+            : 'bg-espresso/35';
+
+        return `
+          <div class="bg-surface hover:bg-cream rounded-2xl border border-borderWarm p-4 sm:p-5 shadow-xs transition flex items-start justify-between gap-4 group">
+            <div class="flex items-start gap-3.5">
+              <div class="w-10 h-10 rounded-xl bg-parchment border border-borderWarm flex items-center justify-center font-serif font-bold text-base text-espresso shrink-0 group-hover:bg-espresso group-hover:text-cream transition">
+                ${seqNum}
+              </div>
+              <div>
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="w-2 h-2 rounded-full ${dotColor}"></span>
+                  <span class="text-[10px] font-extrabold uppercase tracking-wider text-inkMuted">${ev.status} &bull; ${ev.category}</span>
+                </div>
+                <h3 onclick="openDetailDrawer('${ev.id}')" class="cursor-pointer font-serif font-bold text-lg text-espresso group-hover:text-terracotta transition leading-snug">
+                  ${ev.title}
+                </h3>
+                <p class="text-xs text-inkMuted mt-1">${ev.campus} &bull; ${ev.venue}</p>
+                <p class="text-[11px] font-semibold text-espresso/75 mt-0.5">${ev.date}</p>
+              </div>
+            </div>
+
+            <button onclick="selectEventForInlineReg('${ev.id}')" title="Register for #${seqNum} ${ev.title}" class="shrink-0 w-8 h-8 rounded-full bg-parchment hover:bg-terracotta hover:text-white text-espresso flex items-center justify-center text-xs font-bold transition">
+              &rarr;
+            </button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // =========================================================================
+    // 5. EVENT DETAIL DRAWER
+    // =========================================================================
+    function openDetailDrawer(eventId) {
+      const ev = events.find(item => item.id === eventId);
+      if (!ev) return;
+
+      const drawer = document.getElementById('detail-drawer');
+      const content = document.getElementById('detail-drawer-content');
+      const seatsLeft = Math.max(0, ev.seatsTotal - ev.seatsFilled);
+
+      content.innerHTML = `
+        <div class="space-y-6">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-extrabold uppercase tracking-widest text-terracotta">Sequence #${String(ev.order).padStart(2, '0')} &bull; ${ev.category}</span>
+            <button onclick="closeDetailDrawer()" class="w-9 h-9 rounded-full bg-parchment hover:bg-espresso hover:text-cream flex items-center justify-center transition">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+          </div>
+
+          <div class="rounded-2xl overflow-hidden aspect-[16/9] bg-espresso">
+            <img src="${ev.image}" alt="${ev.title}" class="w-full h-full object-cover" />
+          </div>
+
+          <div>
+            <span class="inline-block text-[11px] font-bold px-3 py-1 rounded-full bg-parchment text-espresso mb-2">${ev.campus} &bull; ${ev.venue}</span>
+            <h3 class="font-serif font-bold text-3xl text-espresso">${ev.title}</h3>
+            <p class="text-xs font-semibold text-inkMuted mt-1">${ev.date}</p>
+          </div>
+
+          <p class="text-sm text-inkMuted leading-relaxed">${ev.description}</p>
+
+          <div class="bg-cream rounded-2xl p-4 border border-borderWarm space-y-2.5">
+            <h4 class="text-xs font-extrabold uppercase tracking-wider text-espresso">Session Agenda</h4>
+            <ul class="space-y-1.5 text-xs text-inkMuted">
+              ${(ev.agenda || ['10:00 AM – Opening Briefing', '01:00 PM – Main Evaluation', '04:00 PM – Awards']).map(item => `<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-terracotta"></span>${item}</li>`).join('')}
+            </ul>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3 text-xs">
+            <div class="bg-parchment/70 p-3.5 rounded-xl">
+              <span class="text-inkMuted block">Honours &amp; Prize</span>
+              <strong class="text-espresso font-bold">${ev.prize}</strong>
+            </div>
+            <div class="bg-parchment/70 p-3.5 rounded-xl">
+              <span class="text-inkMuted block">Availability</span>
+              <strong class="text-sage font-bold">${seatsLeft} of ${ev.seatsTotal} seats</strong>
+            </div>
+          </div>
+
+          <button onclick="closeDetailDrawer(); selectEventForInlineReg('${ev.id}');" class="w-full bg-terracotta hover:bg-terracottaDark text-white text-xs font-extrabold uppercase tracking-wider py-3.5 rounded-xl shadow-md transition">
+            Proceed to Semester Lineup Registration &rarr;
+          </button>
+        </div>
+      `;
+
+      drawer.classList.remove('hidden');
+      drawer.classList.add('flex');
+    }
+
+    function closeDetailDrawer() {
+      const drawer = document.getElementById('detail-drawer');
+      drawer.classList.add('hidden');
+      drawer.classList.remove('flex');
+    }
+
+    // =========================================================================
+    // 6. DETERMINISTIC QR GENERATOR, MY PASSES & ORGANIZER CONSOLE
+    // =========================================================================
+    function generateVisualQR(seedText) {
+      let hash = 0;
+      for (let i = 0; i < seedText.length; i++) {
+        hash = ((hash << 5) - hash) + seedText.charCodeAt(i);
+        hash |= 0;
+      }
+      const size = 9;
+      let rects = '';
+      for (let r = 0; r < size; r++) {
+        for (let c = 0; c < size; c++) {
+          const isFinder = (r < 3 && c < 3) || (r < 3 && c >= size - 3) || (r >= size - 3 && c < 3);
+          const bit = isFinder || (((Math.abs(hash + r * 13 + c * 7)) % 3) === 0);
+          if (bit) {
+            rects += `<rect x="${c * 10 + 5}" y="${r * 10 + 5}" width="8" height="8" rx="1.5" fill="#1E1916"/>`;
+          }
+        }
+      }
+      return `<svg viewBox="0 0 100 100" class="w-full h-full">${rects}</svg>`;
+    }
+
+    function updateBadges() {
+      const passBadge = document.getElementById('pass-count-badge');
+      const adminBadge = document.getElementById('admin-reg-count');
+      const myEventsBadge = document.getElementById('my-events-count');
+      if (passBadge) passBadge.textContent = registrations.length;
+      if (adminBadge) adminBadge.textContent = registrations.length;
+      if (myEventsBadge) myEventsBadge.textContent = registrations.length;
+    }
+
+    function openMyPassesModal() {
+      const modal = document.getElementById('passes-modal');
+      const container = document.getElementById('passes-list-container');
+
+      if (!registrations.length) {
+        container.innerHTML = `
+          <div class="text-center py-10">
+            <p class="font-serif font-bold text-xl text-espresso mb-2">No digital passes issued yet</p>
+            <p class="text-xs text-inkMuted mb-5">Register in the Semester Lineup section to generate your QR entry pass.</p>
+            <button onclick="closeMyPassesModal(); scrollToLineupRegistration();" class="bg-terracotta text-white text-xs font-extrabold uppercase tracking-wider px-5 py-2.5 rounded-full">
+              Go to Lineup Registration
+            </button>
+          </div>
+        `;
+      } else {
+        container.innerHTML = registrations.map(reg => `
+          <div class="bg-surface rounded-2xl border border-borderWarm p-4 shadow-xs flex items-center justify-between gap-4">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="bg-terracotta text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full">#${reg.passId}</span>
+                <span class="text-[11px] font-bold text-inkMuted">${reg.type}</span>
+              </div>
+              <h4 class="font-serif font-bold text-lg text-espresso">${reg.eventTitle}</h4>
+              <p class="text-xs text-inkMuted">${reg.eventMeta}</p>
+              <p class="text-xs font-bold text-espresso mt-1.5">${reg.name} &bull; <span class="font-mono text-terracotta">${reg.roll}</span></p>
+            </div>
+            <div class="w-20 h-20 bg-cream p-1.5 rounded-xl border border-borderWarm shrink-0">
+              ${generateVisualQR(reg.passId + reg.roll)}
+            </div>
+          </div>
+        `).join('');
+      }
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeMyPassesModal() {
+      document.getElementById('passes-modal').classList.add('hidden');
+      document.getElementById('passes-modal').classList.remove('flex');
+    }
+
+    function openAdminModal() {
+      switchAdminTab('add');
+      const modal = document.getElementById('admin-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeAdminModal() {
+      const modal = document.getElementById('admin-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function switchAdminTab(tab) {
+      const panels = {
+        add: document.getElementById('admin-add-form'),
+        regs: document.getElementById('admin-regs-panel'),
+        scanner: document.getElementById('admin-scanner-panel')
+      };
+      const tabs = {
+        add: document.getElementById('admin-tab-add'),
+        regs: document.getElementById('admin-tab-regs'),
+        scanner: document.getElementById('admin-tab-scanner')
+      };
+
+      Object.keys(panels).forEach(key => {
+        if (key === tab) {
+          panels[key].classList.remove('hidden');
+          tabs[key].className = 'pb-3 text-xs font-extrabold uppercase tracking-wider border-b-2 border-terracotta text-terracotta';
+        } else {
+          panels[key].classList.add('hidden');
+          tabs[key].className = 'pb-3 text-xs font-extrabold uppercase tracking-wider border-b-2 border-transparent text-inkMuted hover:text-espresso';
+        }
+      });
+
+      if (tab === 'regs') renderAdminRegistrations();
+    }
+
+    function handleCreateEvent(e) {
+      e.preventDefault();
+      const title = document.getElementById('new-ev-title').value.trim();
+      const category = document.getElementById('new-ev-category').value;
+      const campus = document.getElementById('new-ev-campus').value;
+      const date = document.getElementById('new-ev-date').value.trim();
+      const venue = document.getElementById('new-ev-venue').value.trim();
+      const description = document.getElementById('new-ev-desc').value.trim();
+
+      const newEvent = {
+        id: 'ev-' + Date.now(),
+        order: events.length + 1,
+        title,
+        category,
+        isAIML: category === 'AI & ML',
+        campus,
+        status: 'UPCOMING',
+        date,
+        venue,
+        seatsTotal: 100,
+        seatsFilled: 0,
+        prize: 'IEM Merit Certificate',
+        description,
+        agenda: ['10:00 AM – Registration & Check-in', '11:00 AM – Main Session', '04:00 PM – Closing'],
+        image: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=900&q=80',
+        featured: false
+      };
+
+      events.push(newEvent);
+      saveAppState();
+      renderEventsGrid();
+      renderAIMLTrack();
+      renderOrderOfEvents();
+      populateInlineEventSelect(newEvent.id);
+      e.target.reset();
+      closeAdminModal();
+      showToast(`"${title}" added as Sequence #${String(newEvent.order).padStart(2, '0')}!`);
+    }
+
+    function renderAdminRegistrations() {
+      const list = document.getElementById('admin-regs-list');
+      if (!registrations.length) {
+        list.innerHTML = `<p class="text-center text-sm text-inkMuted py-8">No student registrations logged yet.</p>`;
+        return;
+      }
+
+      list.innerHTML = registrations.map(reg => `
+        <div class="bg-surface rounded-2xl p-4 border border-borderWarm flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <span class="text-[10px] font-extrabold uppercase tracking-wider text-terracotta">#${reg.passId} &bull; ${reg.eventTitle}</span>
+            <h5 class="font-bold text-sm text-espresso">${reg.name} <span class="font-normal text-inkMuted">(${reg.roll})</span></h5>
+            <p class="text-xs text-inkMuted">${reg.campus} &bull; ${reg.dept} &bull; ${reg.email}</p>
+          </div>
+          <span class="text-[10px] font-extrabold uppercase px-3 py-1 rounded-full self-start sm:self-center ${
+            reg.checkedIn ? 'bg-sage text-white' : 'bg-parchment text-espresso'
+          }">
+            ${reg.checkedIn ? 'Checked In' : 'Issued'}
+          </span>
+        </div>
+      `).join('');
+    }
+
+    function exportRegistrationsCSV() {
+      if (!registrations.length) {
+        showToast('No registrations available to export.');
+        return;
+      }
+      const headers = ['PassID', 'Event', 'Name', 'RollNo', 'Campus', 'Department', 'Type', 'Email', 'CheckedIn'];
+      const rows = registrations.map(r => [r.passId, r.eventTitle, r.name, r.roll, r.campus, r.dept, r.type, r.email, r.checkedIn].map(v => `"${v}"`).join(','));
+      const csv = [headers.join(','), ...rows].join('\n');
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'IEM_IGNITE26_Registrations.csv';
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('CSV roster downloaded!');
+    }
+
+    function verifyGatePass(e) {
+      e.preventDefault();
+      const input = document.getElementById('gate-pass-input').value.trim().toUpperCase().replace(/^#/, '');
+      const resultBox = document.getElementById('gate-verify-result');
+      const found = registrations.find(r => r.passId.toUpperCase() === input);
+
+      resultBox.classList.remove('hidden');
+      if (!found) {
+        resultBox.className = 'rounded-2xl p-4 border border-terracotta/40 bg-terracotta/10 text-terracotta font-semibold text-xs';
+        resultBox.innerHTML = `Invalid or unrecognized Pass ID: <span class="font-mono font-bold">#${input}</span>`;
+        return;
+      }
+
+      found.checkedIn = true;
+      saveAppState();
+      resultBox.className = 'rounded-2xl p-4 border border-sage/40 bg-sage/10 text-espresso text-xs space-y-1';
+      resultBox.innerHTML = `
+        <p class="font-extrabold text-sage uppercase">Verified Gate Entry &bull; #${found.passId}</p>
+        <p class="font-bold text-sm">${found.name} (${found.roll})</p>
+        <p class="text-inkMuted">${found.eventTitle} &bull; ${found.campus} (${found.dept})</p>
+      `;
+    }
+
+    let toastTimer;
+    function showToast(msg) {
+      const banner = document.getElementById('toast-banner');
+      document.getElementById('toast-message').textContent = msg;
+      banner.classList.remove('translate-y-24', 'opacity-0');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        banner.classList.add('translate-y-24', 'opacity-0');
+      }, 3400);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      loadAppState();
+      updateBadges();
+      renderSpotlight();
+      renderLineupFilters();
+      renderEventsGrid();
+      renderAIMLTrack();
+      renderMyRegisteredEvents();
+      populateInlineEventSelect();
+      renderOrderOfEvents();
+    });
+  </script>
+</body>
+</html>
