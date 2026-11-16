@@ -33,4 +33,4 @@ Running Locally
 
 No build step or server is required. Open index.html directly in any modern web browser.
 
-LIVE DEMO LINK - 
+LIVE DEMO LINK - https://iem-event-management.netlify.app
